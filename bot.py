@@ -1,9 +1,12 @@
+import os
+
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 import g4f
 
-# Токен от BotFather
-TOKEN = '7977756332:AAHHSpvvoEwJz3vrBc7XZfmU1jotKURWnow'
+# Токен от BotFather. Берётся из переменной окружения TELEGRAM_BOT_TOKEN,
+# чтобы не хранить секрет в коде.
+TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 
 # Функция для команды /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -28,6 +31,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Основная функция для запуска бота
 if __name__ == "__main__":
+    if not TOKEN:
+        raise SystemExit(
+            "Не задана переменная окружения TELEGRAM_BOT_TOKEN. "
+            "Получите токен у @BotFather и укажите его, например: "
+            "export TELEGRAM_BOT_TOKEN='...'"
+        )
+
     # Создаём приложение
     app = Application.builder().token(TOKEN).build()
     
