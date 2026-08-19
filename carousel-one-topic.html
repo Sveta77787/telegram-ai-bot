@@ -1,0 +1,833 @@
+<title>Одна понятная тема</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+
+<style>
+  :root{
+    --ink:#0A0611;
+    --ink-2:#100A1C;
+    --surface:#170F27;
+    --surface-2:#1E1433;
+    --line:rgba(255,102,200,.18);
+    --line-soft:rgba(201,168,255,.14);
+    --text:#F7F0FB;
+    --muted:#BEA8CB;
+    --faint:#8B76A0;
+    --pink:#FF4DC0;
+    --lilac:#C9A8FF;
+    --peach:#FFC59E;
+    --grad:linear-gradient(105deg,#FFC59E 0%,#FF4DC0 48%,#C9A8FF 100%);
+    --display:"Unbounded",system-ui,sans-serif;
+    --body:"Golos Text",system-ui,-apple-system,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:
+      radial-gradient(900px 620px at 88% -8%,rgba(255,77,192,.16),transparent 62%),
+      radial-gradient(760px 560px at -6% 108%,rgba(201,168,255,.13),transparent 60%),
+      var(--ink);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* ---------- studio bar ---------- */
+  .bar{
+    position:sticky;top:0;z-index:30;
+    background:rgba(10,6,17,.82);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .bar-in{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:14px 24px;max-width:1180px;margin:0 auto}
+  .mark{font-family:var(--mono);font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+  .mark b{color:var(--text);font-weight:600}
+  .bar-actions{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
+
+  button{font-family:var(--body);cursor:pointer}
+  .btn{
+    border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--text);
+    font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;transition:.2s;
+  }
+  .btn:hover{border-color:var(--pink);box-shadow:0 0 24px -10px var(--pink)}
+  .btn:focus-visible{outline:2px solid var(--lilac);outline-offset:2px}
+  .btn[disabled]{opacity:.45;cursor:progress}
+  .btn-solid{background:var(--grad);border-color:transparent;color:#1B0F2A;font-weight:700}
+  .btn-solid:hover{box-shadow:0 10px 30px -14px var(--pink)}
+  .btn-sm{font-size:12px;padding:7px 13px}
+
+  /* ---------- intro ---------- */
+  header.intro{padding:64px 0 40px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--pink);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  .eyebrow::before{content:"";width:32px;height:1px;background:var(--grad)}
+  h1{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(30px,4.6vw,52px);line-height:1.08;letter-spacing:-.02em;
+    margin:0 0 18px;max-width:19ch;text-wrap:balance;
+  }
+  h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{color:var(--muted);font-size:16.5px;max-width:62ch;margin:0}
+  .meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:28px;padding-top:24px;border-top:1px solid var(--line-soft)}
+  .meta div{font-size:13px;color:var(--faint)}
+  .meta b{display:block;font-family:var(--mono);font-size:15px;color:var(--text);font-weight:600;margin-bottom:3px}
+
+  /* ---------- slides ---------- */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;padding:20px 0 80px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .card{
+    background:rgba(23,15,39,.55);border:1px solid var(--line-soft);border-radius:20px;
+    padding:14px;display:flex;flex-direction:column;gap:12px;transition:.25s;
+  }
+  .card:hover{border-color:var(--line)}
+  .card canvas{width:100%;height:auto;display:block;border-radius:12px;background:var(--ink)}
+  .card-foot{display:flex;align-items:center;gap:8px;padding:0 4px 4px}
+  .idx{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase}
+  .card-foot .sp{margin-left:auto}
+
+  /* ---------- text panel ---------- */
+  .panel{border:1px solid var(--line-soft);border-radius:20px;background:rgba(16,10,28,.6);padding:28px;margin-bottom:80px}
+  .panel h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 6px;letter-spacing:-.01em}
+  .panel p{color:var(--faint);font-size:13.5px;margin:0 0 18px}
+  .panel pre{
+    margin:0;max-height:340px;overflow:auto;white-space:pre-wrap;
+    font-family:var(--body);font-size:13.5px;line-height:1.65;color:var(--muted);
+    background:rgba(0,0,0,.28);border:1px solid var(--line-soft);border-radius:14px;padding:18px;
+  }
+  footer{border-top:1px solid var(--line-soft);padding:28px 0 46px;color:var(--faint);font-size:12.5px}
+
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
+    background:var(--surface-2);border:1px solid var(--line);color:var(--text);
+    padding:12px 20px;border-radius:999px;font-size:13.5px;font-weight:500;
+    opacity:0;pointer-events:none;transition:.28s;z-index:60;box-shadow:0 20px 50px -22px #000;
+  }
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="mark"><b>Карусель-студия</b> &nbsp;·&nbsp; одна тема блога</div>
+    <div class="bar-actions">
+      <button class="btn btn-sm" id="copyAll">Скопировать весь текст</button>
+      <button class="btn btn-sm btn-solid" id="saveAll">Скачать все PNG</button>
+    </div>
+  </div>
+</div>
+
+<header class="intro wrap">
+  <div class="eyebrow">Карусель · 11 слайдов · 1080×1350</div>
+  <h1>Instagram больше не хочет разбираться, <span class="g">о чём ваш блог</span></h1>
+  <p class="lede">Тёмная студия: слайды отрисованы в реальном разрешении 1080×1350 — то, что вы видите, то и сохранится. Каждый слайд можно скачать отдельным PNG или скопировать текстом.</p>
+  <div class="meta">
+    <div><b>11</b> слайдов</div>
+    <div><b>4:5</b> формат ленты</div>
+    <div><b>PNG</b> 1080×1350</div>
+    <div><b>Слайд 11</b> лид-магнит</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+
+  <section class="panel">
+    <h2>Текст карусели</h2>
+    <p>Для заметок, сторис-анонсов или переноса в другой редактор.</p>
+    <pre id="allText"></pre>
+  </section>
+</main>
+
+<footer class="wrap">Смыслы + ИИ · тёмная студия</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  const W = 1080, H = 1350;
+  const PAD = 92;
+  const CW = W - PAD * 2;          // ширина контента
+  const TOP = 214;                  // верх контентной области
+  const BOTTOM = 1178;              // низ контентной области
+  const AVAIL = BOTTOM - TOP;
+
+  const C = {
+    ink:"#0A0611", text:"#F7F0FB", muted:"#BEA8CB", faint:"#8B76A0",
+    pink:"#FF4DC0", lilac:"#C9A8FF", peach:"#FFC59E", accent:"#FF6ECB"
+  };
+
+  const F_DISPLAY = '"Unbounded", system-ui, sans-serif';
+  const F_BODY = '"Golos Text", system-ui, sans-serif';
+  const F_MONO = '"JetBrains Mono", ui-monospace, monospace';
+
+  /* ======================== КОНТЕНТ ======================== */
+
+  const SLIDES = [
+    {
+      cover: true,
+      blocks: [
+        { k:"h", size:"xl", text:"Instagram больше не хочет разбираться, **о чём ваш блог**" },
+        { k:"sp", h:26 },
+        { k:"p", size:"lg", text:"Стабильно продвигаются те, кто говорит на одну понятную тему" }
+      ]
+    },
+    {
+      kicker:"Что изменилось",
+      blocks:[
+        { k:"h", size:"l", text:"Алгоритмы Instagram **изменились**" },
+        { k:"sp", h:14 },
+        { k:"p", text:"Теперь они гораздо внимательнее определяют, о чём ваш аккаунт и какой аудитории его можно показывать." },
+        { k:"p", text:"И делают это **не по одной публикации**." }
+      ]
+    },
+    {
+      kicker:"Как считывается тема",
+      blocks:[
+        { k:"h", size:"m", text:"Instagram считывает тему **на всех уровнях**:" },
+        { k:"sp", h:10 },
+        { k:"list", items:[
+          "что написано в описании профиля",
+          "какие слова вы используете в публикациях",
+          "что размещаете на обложках",
+          "что пишете в подписях",
+          "что произносите голосом в Reels",
+          "какие темы повторяются регулярно"
+        ]}
+      ]
+    },
+    {
+      kicker:"Почему это не срабатывает",
+      blocks:[
+        { k:"p", text:"Если в описании профиля вы психолог по отношениям, но сегодня снимаете Reels про тревожность, завтра — про деньги, потом — про воспитание детей, а между ними публикуете рецепт завтрака," },
+        { k:"sp", h:16 },
+        { k:"p", text:"алгоритм не понимает:" },
+        { k:"sp", h:10 },
+        { k:"q", text:"кому вас показывать?" }
+      ]
+    },
+    {
+      kicker:"И аудитория тоже",
+      blocks:[
+        { k:"h", size:"m", text:"Аудитория тоже не понимает: **почему ей нужно подписаться именно на вас?**" },
+        { k:"sp", h:16 },
+        { k:"p", text:"Человек может согласиться с отдельной публикацией, поставить лайк и уйти." },
+        { k:"p", text:"Потому что не видит, что получит от блога дальше." }
+      ]
+    },
+    {
+      kicker:"Что работает сейчас",
+      blocks:[
+        { k:"h", size:"m", text:"Преимущество получают аккаунты, в которых **всё подтверждает одну тему**" },
+        { k:"sp", h:18 },
+        { k:"card", label:"Описание профиля", blocks:[
+          { k:"quote", text:"Помогаю женщинам выйти из отношений, в которых они давно несчастливы, но боятся уйти" }
+        ]},
+        { k:"sp", h:14 },
+        { k:"card", label:"Контент", blocks:[
+          { k:"list", tight:true, items:[
+            "почему мы остаёмся там, где нам плохо",
+            "страх одиночества",
+            "эмоциональная зависимость",
+            "чувство вины перед партнёром",
+            "жизнь после расставания"
+          ]}
+        ]}
+      ]
+    },
+    {
+      kicker:"Что делает алгоритм",
+      blocks:[
+        { k:"p", text:"Алгоритм быстрее определяет:" },
+        { k:"sp", h:12 },
+        { k:"h", size:"m", text:"этот аккаунт — **про выход из болезненных отношений**" },
+        { k:"sp", h:20 },
+        { k:"p", text:"И начинает тестировать его контент на людях, которые уже читают, смотрят и сохраняют материалы на эту тему." }
+      ]
+    },
+    {
+      kicker:"Важная оговорка",
+      blocks:[
+        { k:"p", text:"Это не значит, что психолог должен годами повторять: «Вам нужно выйти из плохих отношений»." },
+        { k:"sp", h:18 },
+        { k:"h", size:"m", text:"Одна тема — **не одна и та же мысль**" },
+        { k:"sp", h:14 },
+        { k:"p", text:"Внутри неё сотни:" },
+        { k:"sp", h:8 },
+        { k:"list", cols:2, tight:true, items:[
+          "ситуаций","страхов","ошибок","вопросов","клиентских историй","возражений","решений"
+        ]}
+      ]
+    },
+    {
+      kicker:"Главная ошибка",
+      blocks:[
+        { k:"h", size:"m", text:"Проблема большинства экспертов не в том, что **им нечего сказать**" },
+        { k:"sp", h:18 },
+        { k:"p", text:"Они просто пытаются показать все свои знания одновременно." },
+        { k:"p", text:"И в результате ни аудитория, ни алгоритмы не успевают связать их с чем-то конкретным." }
+      ]
+    },
+    {
+      kicker:"С чего начинается рост",
+      blocks:[
+        { k:"h", size:"m", text:"Сначала вы должны стать для человека:" },
+        { k:"sp", h:16 },
+        { k:"list", items:[
+          "«Тем самым психологом про отношения»",
+          "«Тем самым нутрициологом про вечерние срывы»",
+          "«Тем самым стилистом, после которого перестаёшь покупать ненужные вещи»"
+        ]},
+        { k:"sp", h:16 },
+        { k:"p", text:"А уже потом аудитории станет интересно **всё остальное**." }
+      ]
+    },
+    {
+      kicker:"Подарок",
+      last:true,
+      blocks:[
+        { k:"h", size:"m", text:"Забирайте разбор **«Одна тема — сто постов»**" },
+        { k:"sp", h:18 },
+        { k:"card", label:"Что внутри", blocks:[
+          { k:"list", tight:true, items:[
+            "как выбрать одну тему блога, если вы умеете многое",
+            "7 вопросов к описанию профиля: считывается ли тема",
+            "карта из 100 тем внутри одной темы: ситуации, страхи, ошибки, возражения",
+            "что публиковать первые две недели, чтобы алгоритм понял, кому вас показывать"
+          ]}
+        ]},
+        { k:"sp", h:20 },
+        { k:"cta", text:"Напишите слово ТЕМА в директ" },
+        { k:"sp", h:14 },
+        { k:"p", size:"sm", text:"Сохраните пост, чтобы не потерять." }
+      ]
+    }
+  ];
+
+  /* ======================== ТЕКСТ ДЛЯ КОПИРОВАНИЯ ======================== */
+
+  const clean = s => s.replace(/\*\*/g, "");
+  function slideText(sl, i){
+    const out = ["СЛАЙД " + (i + 1) + (sl.kicker ? " — " + sl.kicker.toUpperCase() : "")];
+    const walk = blocks => blocks.forEach(b => {
+      if (b.k === "h" || b.k === "p") out.push(clean(b.text));
+      else if (b.k === "q") out.push(clean(b.text));
+      else if (b.k === "quote") out.push("«" + clean(b.text) + "»");
+      else if (b.k === "cta") out.push("→ " + clean(b.text));
+      else if (b.k === "list") b.items.forEach(it => out.push("— " + clean(it)));
+      else if (b.k === "card") { out.push(b.label + ":"); walk(b.blocks); }
+    });
+    walk(sl.blocks);
+    return out.join("\n");
+  }
+  const FULL_TEXT = SLIDES.map(slideText).join("\n\n");
+
+  /* ======================== ДВИЖОК ОТРИСОВКИ ======================== */
+
+  const SIZES = {
+    xl:{ font:F_DISPLAY, weight:800, size:70, lh:1.14, color:C.text, gap:0 },
+    l: { font:F_DISPLAY, weight:800, size:56, lh:1.16, color:C.text, gap:0 },
+    m: { font:F_DISPLAY, weight:600, size:44, lh:1.22, color:C.text, gap:0 }
+  };
+  const P_SIZES = {
+    lg:{ size:36, lh:1.44, color:C.muted },
+    md:{ size:32, lh:1.5,  color:C.muted },
+    sm:{ size:26, lh:1.5,  color:C.faint }
+  };
+
+  function fontStr(weight, size, family){ return weight + " " + Math.round(size) + "px " + family; }
+
+  function tokenize(text){
+    const out = [];
+    text.split(/(\*\*[^*]+\*\*)/g).forEach(part => {
+      if (!part) return;
+      const acc = part.startsWith("**") && part.endsWith("**");
+      const body = acc ? part.slice(2, -2) : part;
+      body.split(/\s+/).forEach(w => { if (w) out.push({ w, acc }); });
+    });
+    return out;
+  }
+
+  // знаки препинания прилипают к предыдущему слову без пробела
+  const NO_SPACE = /^[:;,.!?»)\u2026]/;
+
+  function wrap(ctx, tokens, maxW){
+    const lines = [];
+    let line = [], width = 0;
+    const sp = ctx.measureText(" ").width;
+    tokens.forEach(t => {
+      const tw = ctx.measureText(t.w).width;
+      const glue = NO_SPACE.test(t.w);
+      const gap = line.length && !glue ? sp : 0;
+      if (line.length && !glue && width + gap + tw > maxW){ lines.push(line); line = [t]; width = tw; }
+      else { width += gap + tw; line.push(t); }
+    });
+    if (line.length) lines.push(line);
+    return lines;
+  }
+
+  function drawLine(ctx, line, x, y, grad, plain){
+    const sp = ctx.measureText(" ").width;
+    let cx = x;
+    line.forEach((t, i) => {
+      ctx.fillStyle = t.acc ? grad : plain;
+      ctx.fillText(t.w, cx, y);
+      const next = line[i + 1];
+      cx += ctx.measureText(t.w).width + (next && !NO_SPACE.test(next.w) ? sp : 0);
+    });
+  }
+
+  // Раскладка: считает высоты и возвращает список операций отрисовки
+  function layout(ctx, blocks, x, maxW, s, opt){
+    opt = opt || {};
+    const ACC = opt.grad ? null : C.accent;   // на обложке — градиент, в теле — сплошной акцент
+    const ops = [];
+    let y = 0;
+
+    const push = (h, fn) => { const yy = y; ops.push({ y: yy, fn: (dy) => fn(yy + dy) }); y += h; };
+
+    blocks.forEach((b, bi) => {
+      if (bi > 0 && b.k !== "sp") y += 16 * s;
+
+      if (b.k === "sp"){ y += b.h * s; return; }
+
+      if (b.k === "h"){
+        const st = SIZES[b.size || "m"];
+        ctx.font = fontStr(st.weight, st.size * s, st.font);
+        const lines = wrap(ctx, tokenize(b.text), maxW);
+        const lh = st.size * s * st.lh;
+        push(lines.length * lh, (top) => {
+          ctx.font = fontStr(st.weight, st.size * s, st.font);
+          ctx.textBaseline = "alphabetic";
+          const acc = ACC || accentGrad(ctx, x, maxW);
+          lines.forEach((ln, i) => drawLine(ctx, ln, x, top + lh * (i + .78), acc, st.color));
+        });
+        return;
+      }
+
+      if (b.k === "p"){
+        const st = P_SIZES[b.size || "md"];
+        ctx.font = fontStr(400, st.size * s, F_BODY);
+        const lines = wrap(ctx, tokenize(b.text), maxW);
+        const lh = st.size * s * st.lh;
+        push(lines.length * lh, (top) => {
+          ctx.font = fontStr(400, st.size * s, F_BODY);
+          const acc = ACC || accentGrad(ctx, x, maxW);
+          lines.forEach((ln, i) => drawLine(ctx, ln, x, top + lh * (i + .76), acc, st.color));
+        });
+        return;
+      }
+
+      if (b.k === "q"){
+        const size = 52 * s, lh = size * 1.2;
+        ctx.font = fontStr(800, size, F_DISPLAY);
+        const lines = wrap(ctx, tokenize(b.text), maxW - 34 * s);
+        push(lines.length * lh + 12 * s, (top) => {
+          const g = ctx.createLinearGradient(x, top, x, top + lines.length * lh);
+          g.addColorStop(0, C.peach); g.addColorStop(.5, C.pink); g.addColorStop(1, C.lilac);
+          ctx.fillStyle = g;
+          ctx.fillRect(x, top + 6 * s, 5 * s, lines.length * lh);
+          ctx.font = fontStr(800, size, F_DISPLAY);
+          lines.forEach((ln, i) => drawLine(ctx, ln, x + 30 * s, top + lh * (i + .8), g, C.text));
+        });
+        return;
+      }
+
+      if (b.k === "quote"){
+        const size = 34 * s, lh = size * 1.42;
+        ctx.font = fontStr(500, size, F_BODY);
+        const lines = wrap(ctx, tokenize("«" + b.text + "»"), maxW);
+        push(lines.length * lh, (top) => {
+          ctx.font = fontStr(500, size, F_BODY);
+          ctx.fillStyle = C.text;
+          lines.forEach((ln, i) => drawLine(ctx, ln, x, top + lh * (i + .78), C.pink, C.text));
+        });
+        return;
+      }
+
+      if (b.k === "list"){
+        const cols = b.cols || 1;
+        const gapX = 34 * s;
+        const colW = (maxW - gapX * (cols - 1)) / cols;
+        const size = (b.tight ? 29 : 31) * s, lh = size * 1.42;
+        const itemGap = (b.tight ? 12 : 17) * s;
+        const dash = 30 * s;
+        ctx.font = fontStr(400, size, F_BODY);
+        const wrapped = b.items.map(it => wrap(ctx, tokenize(it), colW - dash));
+        // распределяем по колонкам
+        const perCol = Math.ceil(wrapped.length / cols);
+        const colHeights = [];
+        for (let c = 0; c < cols; c++){
+          let hh = 0;
+          wrapped.slice(c * perCol, (c + 1) * perCol).forEach(ln => { hh += ln.length * lh + itemGap; });
+          colHeights.push(Math.max(0, hh - itemGap));
+        }
+        push(Math.max.apply(null, colHeights), (top) => {
+          ctx.font = fontStr(400, size, F_BODY);
+          for (let c = 0; c < cols; c++){
+            let yy = top;
+            const cx = x + c * (colW + gapX);
+            wrapped.slice(c * perCol, (c + 1) * perCol).forEach(ln => {
+              ctx.fillStyle = C.pink;
+              ctx.fillRect(cx, yy + lh * .52, 16 * s, 2.5 * s);
+              ln.forEach((line, i) => drawLine(ctx, line, cx + dash, yy + lh * (i + .78), C.accent, C.muted));
+              yy += ln.length * lh + itemGap;
+            });
+          }
+        });
+        return;
+      }
+
+      if (b.k === "card"){
+        const padX = 34 * s, padY = 30 * s;
+        const labelSize = 20 * s;
+        const inner = layout(ctx, b.blocks, x + padX, maxW - padX * 2, s, opt);
+        const h = padY * 2 + labelSize * 1.9 + inner.height;
+        push(h, (top) => {
+          roundRect(ctx, x, top, maxW, h, 26 * s);
+          ctx.fillStyle = "rgba(255,255,255,.035)"; ctx.fill();
+          ctx.strokeStyle = "rgba(255,102,200,.28)"; ctx.lineWidth = 1.5 * s; ctx.stroke();
+          ctx.save();
+          try { ctx.letterSpacing = (2.6 * s) + "px"; } catch(e){}
+          ctx.font = fontStr(600, labelSize, F_MONO);
+          ctx.fillStyle = C.pink;
+          ctx.fillText(b.label.toUpperCase(), x + padX, top + padY + labelSize);
+          ctx.restore();
+          inner.draw(top + padY + labelSize * 1.9);
+        });
+        return;
+      }
+
+      if (b.k === "cta"){
+        const size = 30 * s, padY = 24 * s, padX = 38 * s;
+        ctx.font = fontStr(700, size, F_BODY);
+        const tw = ctx.measureText(b.text).width;
+        const bw = Math.min(maxW, tw + padX * 2 + 44 * s);
+        const bh = size * 1.25 + padY * 2;
+        push(bh, (top) => {
+          const g = ctx.createLinearGradient(x, top, x + bw, top + bh);
+          g.addColorStop(0, C.peach); g.addColorStop(.5, C.pink); g.addColorStop(1, C.lilac);
+          roundRect(ctx, x, top, bw, bh, bh / 2);
+          ctx.fillStyle = g; ctx.fill();
+          ctx.font = fontStr(700, size, F_BODY);
+          ctx.fillStyle = "#1B0F2A";
+          ctx.fillText(b.text, x + padX, top + bh / 2 + size * .36);
+          ctx.fillText("→", x + bw - padX - ctx.measureText("→").width + 8 * s, top + bh / 2 + size * .36);
+        });
+        return;
+      }
+    });
+
+    return { height: y, draw: (dy) => ops.forEach(o => o.fn(dy)) };
+  }
+
+  function accentGrad(ctx, x, w){
+    const g = ctx.createLinearGradient(x, 0, x + w, 0);
+    g.addColorStop(0, C.peach); g.addColorStop(.5, C.pink); g.addColorStop(1, C.lilac);
+    return g;
+  }
+
+  function roundRect(ctx, x, y, w, h, r){
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  /* ---------- фон и рамка слайда ---------- */
+
+  let noiseTile = null;
+  function noise(){
+    if (noiseTile) return noiseTile;
+    const n = document.createElement("canvas");
+    n.width = n.height = 140;
+    const nc = n.getContext("2d");
+    const img = nc.createImageData(140, 140);
+    for (let i = 0; i < img.data.length; i += 4){
+      const v = 120 + Math.random() * 135;
+      img.data[i] = img.data[i+1] = img.data[i+2] = v;
+      img.data[i+3] = 255;
+    }
+    nc.putImageData(img, 0, 0);
+    noiseTile = n;
+    return n;
+  }
+
+  function paintBackground(ctx, sl){
+    ctx.fillStyle = C.ink;
+    ctx.fillRect(0, 0, W, H);
+
+    const glow1 = ctx.createRadialGradient(W * .88, -60, 0, W * .88, -60, sl.cover ? 1000 : 820);
+    glow1.addColorStop(0, sl.cover ? "rgba(255,77,192,.34)" : "rgba(255,77,192,.20)");
+    glow1.addColorStop(1, "rgba(255,77,192,0)");
+    ctx.fillStyle = glow1; ctx.fillRect(0, 0, W, H);
+
+    const glow2 = ctx.createRadialGradient(-40, H + 60, 0, -40, H + 60, sl.cover ? 900 : 720);
+    glow2.addColorStop(0, sl.last ? "rgba(255,197,158,.22)" : "rgba(201,168,255,.17)");
+    glow2.addColorStop(1, "rgba(201,168,255,0)");
+    ctx.fillStyle = glow2; ctx.fillRect(0, 0, W, H);
+
+    ctx.save();
+    ctx.globalAlpha = .035;
+    const pat = ctx.createPattern(noise(), "repeat");
+    ctx.fillStyle = pat; ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+
+    if (sl.cover) paintCoverMotif(ctx);
+  }
+
+
+  // Мотив обложки: разрозненные сигналы сходятся в одну точку — одну тему
+  function rnd(seed){ return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  function paintCoverMotif(ctx){
+    const r = rnd(20260819);
+    const ax = W * .70, ay = 470;
+    const pts = [];
+    for (let i = 0; i < 78; i++){
+      pts.push({ x: 92 + r() * (W - 184), y: 196 + r() * 500, s: 1.6 + r() * 2.6, a: .08 + r() * .2 });
+    }
+    // связи от ближайших сигналов к теме
+    pts.map(p => ({ p, d: Math.hypot(p.x - ax, p.y - ay) }))
+       .sort((u, v) => u.d - v.d)
+       .slice(0, 9)
+       .forEach(({ p }) => {
+         const g = ctx.createLinearGradient(p.x, p.y, ax, ay);
+         g.addColorStop(0, "rgba(201,168,255,0)");
+         g.addColorStop(1, "rgba(255,77,192,.34)");
+         ctx.strokeStyle = g; ctx.lineWidth = 1.1;
+         ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(ax, ay); ctx.stroke();
+       });
+    pts.forEach(p => {
+      ctx.fillStyle = "rgba(201,168,255," + p.a.toFixed(3) + ")";
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2); ctx.fill();
+    });
+    // сама тема
+    ctx.save();
+    ctx.shadowColor = "rgba(255,77,192,.85)"; ctx.shadowBlur = 42;
+    ctx.fillStyle = "#FF4DC0";
+    ctx.beginPath(); ctx.arc(ax, ay, 7.5, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+    ctx.strokeStyle = "rgba(255,197,158,.32)"; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(ax, ay, 26, 0, Math.PI * 2); ctx.stroke();
+  }
+
+  function paintChrome(ctx, sl, i){
+    ctx.textBaseline = "alphabetic";
+    // верхняя строка
+    ctx.save();
+    try { ctx.letterSpacing = "3.4px"; } catch(e){}
+    ctx.font = fontStr(600, 20, F_MONO);
+    ctx.fillStyle = C.faint;
+    ctx.fillText("СМЫСЛЫ + ИИ", PAD, 108);
+    const num = String(i + 1).padStart(2, "0") + " / " + String(SLIDES.length).padStart(2, "0");
+    const nw = ctx.measureText(num).width;
+    ctx.fillStyle = i === SLIDES.length - 1 ? C.pink : C.faint;
+    ctx.fillText(num, W - PAD - nw, 108);
+    ctx.restore();
+
+    // кикер
+    if (sl.kicker){
+      ctx.save();
+      try { ctx.letterSpacing = "3.4px"; } catch(e){}
+      ctx.font = fontStr(600, 22, F_MONO);
+      const g = accentGrad(ctx, PAD, 420);
+      ctx.fillStyle = g;
+      ctx.fillText(sl.kicker.toUpperCase(), PAD + 46, 172);
+      ctx.fillRect(PAD, 164, 32, 2.5);
+      ctx.restore();
+    }
+
+    // прогресс-полоса
+    const barY = H - 108, barW = W - PAD * 2;
+    ctx.fillStyle = "rgba(255,255,255,.10)";
+    ctx.fillRect(PAD, barY, barW, 3);
+    const done = barW * ((i + 1) / SLIDES.length);
+    const g2 = ctx.createLinearGradient(PAD, 0, PAD + done, 0);
+    g2.addColorStop(0, C.peach); g2.addColorStop(.5, C.pink); g2.addColorStop(1, C.lilac);
+    ctx.fillStyle = g2;
+    ctx.fillRect(PAD, barY, done, 3);
+
+    if (sl.cover){
+      ctx.save();
+      try { ctx.letterSpacing = "3.4px"; } catch(e){}
+      ctx.font = fontStr(600, 20, F_MONO);
+      ctx.fillStyle = C.pink;
+      const t = "ЛИСТАЙТЕ →";
+      ctx.fillText(t, W - PAD - ctx.measureText(t).width, barY - 34);
+      ctx.restore();
+    }
+  }
+
+  function render(canvas, sl, i){
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, W, H);
+    paintBackground(ctx, sl);
+    paintChrome(ctx, sl, i);
+
+    // автоподбор масштаба, чтобы контент точно поместился
+    const top = sl.cover ? 300 : TOP;
+    const avail = BOTTOM - top;
+    const opt = { grad: !!sl.cover };
+    let s = 1, box = layout(ctx, sl.blocks, PAD, CW, s, opt);
+    let guard = 0;
+    while (box.height > avail && s > 0.6 && guard++ < 40){
+      s -= 0.02;
+      box = layout(ctx, sl.blocks, PAD, CW, s, opt);
+    }
+    // обложка — по нижней трети, остальные — оптически по центру
+    const startY = sl.cover
+      ? (BOTTOM - box.height - 40)
+      : top + Math.max(0, (avail - box.height)) * 0.44;
+    box.draw(startY);
+  }
+
+  /* ======================== СТУДИЯ ======================== */
+
+  const grid = document.getElementById("grid");
+  const toastEl = document.getElementById("toast");
+  const canvases = [];
+  let toastTimer;
+
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("on"), 2600);
+  }
+
+  SLIDES.forEach((sl, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const cv = document.createElement("canvas");
+    cv.width = W; cv.height = H;
+    cv.setAttribute("role", "img");
+    cv.setAttribute("aria-label", "Слайд " + (i + 1) + ". " + slideText(sl, i).replace(/\n/g, ". "));
+    card.appendChild(cv);
+    canvases.push(cv);
+
+    const foot = document.createElement("div");
+    foot.className = "card-foot";
+
+    const idx = document.createElement("span");
+    idx.className = "idx";
+    idx.textContent = "Слайд " + String(i + 1).padStart(2, "0") + (sl.last ? " · лид-магнит" : "");
+    foot.appendChild(idx);
+
+    const bText = document.createElement("button");
+    bText.className = "btn btn-sm sp";
+    bText.textContent = "Текст";
+    bText.addEventListener("click", () => copy(slideText(sl, i), "Текст слайда " + (i + 1) + " скопирован"));
+    foot.appendChild(bText);
+
+    const bPng = document.createElement("button");
+    bPng.className = "btn btn-sm";
+    bPng.textContent = "PNG";
+    bPng.addEventListener("click", () => savePng(i, bPng));
+    foot.appendChild(bPng);
+
+    card.appendChild(foot);
+    grid.appendChild(card);
+  });
+
+  document.getElementById("allText").textContent = FULL_TEXT;
+
+  function copy(text, okMsg){
+    const done = () => toast(okMsg);
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+    } else fallbackCopy(text, done);
+  }
+  function fallbackCopy(text, done){
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.cssText = "position:fixed;opacity:0;left:-9999px";
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch(e){}
+    ta.remove();
+    ok ? done() : toast("Не удалось скопировать — выделите текст внизу страницы");
+  }
+
+  document.getElementById("copyAll").addEventListener("click", () => copy(FULL_TEXT, "Весь текст карусели скопирован"));
+
+  let downloads = null, downloadsReady = false;
+  async function getDownloads(){
+    if (downloadsReady) return downloads;
+    downloadsReady = true;
+    try { downloads = window.claude && claude.use ? await claude.use("downloads") : null; }
+    catch(e){ downloads = null; }
+    return downloads;
+  }
+
+  function toBlob(canvas){
+    return new Promise(res => canvas.toBlob(res, "image/png"));
+  }
+
+  async function savePng(i, btn){
+    const d = await getDownloads();
+    if (!d){ toast("Сохранение файлов недоступно в этом окне"); return; }
+    if (btn){ btn.disabled = true; btn.textContent = "…"; }
+    try {
+      const blob = await toBlob(canvases[i]);
+      await d.save({ filename: "karusel-odna-tema-" + String(i + 1).padStart(2, "0") + ".png", data: blob });
+      toast("Слайд " + (i + 1) + " сохранён");
+      return "saved";
+    } catch(err){
+      const code = err && err.code;
+      if (code === "declined") toast("Сохранение отменено");
+      else if (code === "rate_limited") toast("Слишком часто — попробуйте через пару секунд");
+      else toast("Не удалось сохранить слайд " + (i + 1));
+      return code || "error";
+    } finally {
+      if (btn){ btn.disabled = false; btn.textContent = "PNG"; }
+    }
+  }
+
+  document.getElementById("saveAll").addEventListener("click", async (e) => {
+    const btn = e.currentTarget;
+    const d = await getDownloads();
+    if (!d){ toast("Сохранение файлов недоступно в этом окне"); return; }
+    btn.disabled = true;
+    const orig = btn.textContent;
+    for (let i = 0; i < canvases.length; i++){
+      btn.textContent = "Сохраняю " + (i + 1) + " из " + canvases.length;
+      const r = await savePng(i, null);
+      if (r === "declined"){ toast("Остановлено на слайде " + (i + 1)); break; }
+      if (r && r !== "saved" && r !== "declined"){ break; }
+    }
+    btn.textContent = orig;
+    btn.disabled = false;
+  });
+
+  /* ---------- запуск после загрузки шрифтов ---------- */
+
+  const sample = "Тема";
+  const preload = [
+    '800 70px "Unbounded"', '600 44px "Unbounded"',
+    '400 32px "Golos Text"', '500 34px "Golos Text"', '700 30px "Golos Text"',
+    '600 22px "JetBrains Mono"'
+  ];
+
+  function drawAll(){ SLIDES.forEach((sl, i) => render(canvases[i], sl, i)); }
+
+  drawAll(); // мгновенный первый кадр на системных шрифтах
+
+  if (document.fonts && document.fonts.load){
+    Promise.all(preload.map(f => document.fonts.load(f, sample).catch(() => {})))
+      .then(() => document.fonts.ready)
+      .then(drawAll)
+      .catch(drawAll);
+  }
+})();
+</script>
