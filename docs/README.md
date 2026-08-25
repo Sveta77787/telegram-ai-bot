@@ -9,6 +9,7 @@
 | [02-politika-konfidencialnosti.md](02-politika-konfidencialnosti.md) | Отдельной страницей на таплинке, ссылка на первом экране бота |
 | [03-soglasie-pdn.md](03-soglasie-pdn.md) | Короткий текст — в бота, полный — страницей на таплинке |
 | [04-korotkie-teksty.md](04-korotkie-teksty.md) | Шапка профиля, плашки в видео, экраны бота, ответы на комментарии |
+| [06-taplink-gotovyy.md](06-taplink-gotovyy.md) | **Готовый текст всех блоков таплинка** — продукты и личная работа тренера, копировать и вставлять |
 
 Разбор рисков и порядок действий — в [strategy/09-yuridicheskaya-samozashchita.md](../strategy/09-yuridicheskaya-samozashchita.md).
 
