@@ -29,6 +29,8 @@
 | [09-yuridicheskaya-samozashchita.md](strategy/09-yuridicheskaya-samozashchita.md) | Риски по убыванию и как закрыть их без юриста |
 | **[10-poshagovoe-rukovodstvo.md](strategy/10-poshagovoe-rukovodstvo.md)** | **Пошаговое руководство — главный файл** |
 | **[11-gde-chto-brat.md](strategy/11-gde-chto-brat.md)** | **Инструкции: куда заходить, что нажимать** |
+| **[12-nedelya-trenera.md](strategy/12-nedelya-trenera.md)** | **Неделя тренера по дням с готовыми текстами для рилс и канала** |
+| [13-bot.md](strategy/13-bot.md) | Про бота: что умеет и как собрать без кода |
 
 ### `docs/` — готовые документы
 
